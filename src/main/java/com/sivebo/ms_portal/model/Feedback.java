@@ -22,7 +22,7 @@ public class Feedback {
         Long id;
 
         @Column(name = "id_guia_tracking", nullable = false)
-        Long id_guia_tracking; 
+        Long idGuiaTracking; 
 
         @Column(name = "calificacion", nullable = false)
         Integer calificacion;

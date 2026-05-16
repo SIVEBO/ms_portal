@@ -24,11 +24,11 @@ public class Consulta {
         Long id; 
 
         @Column(name = "codigo_tracking_consultado", nullable = false, length=12)
-        String codigo_tracking_consultado;
+        String codigoTrackingConsultado;
 
         @Column(name = "ip_usuario", nullable = false, length=15)
-        String ip_usuario;
+        String ipUsuario;
 
         @Column(name = "fecha_hora", nullable = false, unique=true)
-        LocalDateTime fecha_hora;
+        LocalDateTime fechaHora;
 }
