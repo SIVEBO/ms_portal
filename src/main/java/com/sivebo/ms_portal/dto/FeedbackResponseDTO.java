@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FeedbackResponse {
+public class FeedbackResponseDTO {
         
         Long id; 
         Long idGuiaTracking; 
