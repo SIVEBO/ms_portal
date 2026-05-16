@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "consulta_publica")
-public class ConsultaPublica {
+@Table(name = "consulta")
+public class Consulta {
         
         @Id
         @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -29,6 +29,6 @@ public class ConsultaPublica {
         @Column(name = "ip_usuario", nullable = false, length=15)
         String ip_usuario;
 
-        @Column(name = "fecha_hora", nullable = false)
+        @Column(name = "fecha_hora", nullable = false, unique=true)
         LocalDateTime fecha_hora;
 }
