@@ -1,4 +1,4 @@
-package com.sivebo.ms_portal.dto;
+package com.sivebo.ms_portal.dto.Response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

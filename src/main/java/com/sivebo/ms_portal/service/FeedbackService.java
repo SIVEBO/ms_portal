@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import com.sivebo.ms_portal.dto.FeedbackRequestDTO;
-import com.sivebo.ms_portal.dto.FeedbackResponseDTO;
+import com.sivebo.ms_portal.dto.Request.FeedbackRequestDTO;
+import com.sivebo.ms_portal.dto.Response.FeedbackResponseDTO;
 import com.sivebo.ms_portal.model.Feedback;
 import com.sivebo.ms_portal.repository.FeedbackRepository;
 import com.sivebo.ms_portal.utils.WebClientUtil;

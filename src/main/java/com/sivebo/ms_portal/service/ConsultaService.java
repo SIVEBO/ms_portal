@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import com.sivebo.ms_portal.dto.ConsultaRequestDTO;
-import com.sivebo.ms_portal.dto.ConsultaResponseDTO;
+import com.sivebo.ms_portal.dto.Request.ConsultaRequestDTO;
+import com.sivebo.ms_portal.dto.Response.ConsultaResponseDTO;
 import com.sivebo.ms_portal.model.Consulta;
 import com.sivebo.ms_portal.repository.ConsultaRepository;
 import com.sivebo.ms_portal.utils.WebClientUtil;

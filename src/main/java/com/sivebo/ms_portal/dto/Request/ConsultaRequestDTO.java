@@ -1,4 +1,4 @@
-package com.sivebo.ms_portal.dto;
+package com.sivebo.ms_portal.dto.Request;
 
 import java.time.LocalDateTime;
 
