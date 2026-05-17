@@ -1,6 +1,8 @@
 package com.sivebo.ms_portal.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -63,7 +65,10 @@ public class ConsultaService {
         }
 
         public List<ConsultaResponseDTO> getByFecha(LocalDate fecha){
-                return consultaRepository.findByFecha(fecha)
+                LocalDateTime comienzo = fecha.atStartOfDay();
+                LocalDateTime fin = fecha.atTime(LocalTime.MAX);
+
+                return consultaRepository.findByFechaHoraBetween(comienzo, fin)
                         .stream().map(this::mapToDTO)
                         .collect(Collectors.toList());
         }
