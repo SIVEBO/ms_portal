@@ -14,6 +14,6 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Long> {
 
         List<Consulta> findByCodigoTrackingConsultado(String codigoTrackingConsultado);
 
-        @Query("Select date FROM consulta WHERE DATE(date.fecha_hora) = :fecha")
+        @Query("Select date FROM Consulta WHERE DATE(date.fechaHora) = :fecha")
         List<Consulta> findByFecha(LocalDate fecha);
 }
