@@ -72,7 +72,7 @@ public class ConsultaController {
                         log.info(">>> Buscando consulta por fecha: {}", fecha);
                         return ResponseEntity.ok(consultaService.getByFecha(fecha_formateada));
                 }else{
-                        return ResponseEntity.internalServerError().body("Solo se permite un atributo de búsqueda a la vez");
+                        return ResponseEntity.internalServerError().body("Error en el URL query");
                 }
         }
 

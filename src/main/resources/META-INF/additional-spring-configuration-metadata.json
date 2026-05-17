@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "ms.tracking.url",
+  "type": "java.lang.String",
+  "description": "URl de microservicio trackingKs"
+}]}
