@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ConsultaRequestDTO {
 
-        @Size(min = 12, max = 12, message = "El código de tracking debe tener exactamente 12 caracteres")
+        @Size(min = 13, max = 13, message = "El código de tracking debe tener exactamente 12 caracteres")
         @NotBlank(message = "El código de tracking es obligatorio")
         String codigoTrackingConsultado;
 
