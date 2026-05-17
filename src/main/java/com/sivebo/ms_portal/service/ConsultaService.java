@@ -50,19 +50,19 @@ public class ConsultaService {
                 return consultaRepository.findById(id).map(this::mapToDTO);
         }
 
-        List<ConsultaResponseDTO> getByIpUsuario(String ipUsuario){
+        public List<ConsultaResponseDTO> getByIpUsuario(String ipUsuario){
                 return consultaRepository.findByIpUsuario(ipUsuario)
                         .stream().map(this::mapToDTO)
                         .collect(Collectors.toList());
         }
 
-        List<ConsultaResponseDTO> getByCodigoTrackingConsultado(String codigoTrackingConsultado){
+        public List<ConsultaResponseDTO> getByCodigoTrackingConsultado(String codigoTrackingConsultado){
                 return consultaRepository.findByCodigoTrackingConsultado(codigoTrackingConsultado)
                         .stream().map(this::mapToDTO)
                         .collect(Collectors.toList());
         }
 
-        List<ConsultaResponseDTO> getByFecha(LocalDate fecha){
+        public List<ConsultaResponseDTO> getByFecha(LocalDate fecha){
                 return consultaRepository.findByFecha(fecha)
                         .stream().map(this::mapToDTO)
                         .collect(Collectors.toList());
