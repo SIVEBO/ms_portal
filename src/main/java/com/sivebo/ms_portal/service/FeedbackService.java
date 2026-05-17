@@ -1,9 +1,13 @@
 package com.sivebo.ms_portal.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.sivebo.ms_portal.dto.FeedbackRequestDTO;
 import com.sivebo.ms_portal.dto.FeedbackResponseDTO;
 import com.sivebo.ms_portal.model.Feedback;
 import com.sivebo.ms_portal.repository.FeedbackRepository;
@@ -24,7 +28,7 @@ public class FeedbackService {
         @Qualifier("trackingWebClient")
         private final WebClient trackingWebClient;
 
-        private FeedbackResponseDTO mapTODTO(Feedback feedback) {
+        private FeedbackResponseDTO mapToDTO(Feedback feedback) {
                 return new FeedbackResponseDTO(
                         feedback.getId(),
                         feedback.getIdGuiaTracking(),
@@ -33,5 +37,44 @@ public class FeedbackService {
                 );
         }
 
-        
+        public List<FeedbackResponseDTO> getAll() {
+                return feedbackRepository.findAll()
+                        .stream()
+                        .map(this::mapToDTO).toList();
+        }
+
+        public Optional<FeedbackResponseDTO> getById(Long id) {
+                return feedbackRepository.findById(id).map(this::mapToDTO);
+        }
+
+        public List<FeedbackResponseDTO> getByCalificacion(Integer calificacion){
+                return feedbackRepository.findByCalificacion(calificacion)
+                        .stream().map(this::mapToDTO).toList();
+        }
+
+        public List<FeedbackResponseDTO> getbyIdGuiaTracking(Long idGuiaTracking){
+                return feedbackRepository.findByIdGuiaTracking(idGuiaTracking)
+                        .stream().map(this::mapToDTO).toList();
+        }
+
+        public FeedbackResponseDTO create(FeedbackRequestDTO dto){
+                webClientUtil.validateMicroServiceByQuery(
+                        "portal", 
+                        "codigo_tracking",
+                        String.valueOf(dto.getIdGuiaTracking()),
+                        trackingWebClient);
+                return mapToDTO(feedbackRepository.save(
+                        new Feedback(
+                                null,
+                                dto.getIdGuiaTracking(),
+                                dto.getCalificacion(),
+                                dto.getComentario()
+                        )
+                ));
+        }
+
+        public Boolean delete(Long id){
+                feedbackRepository.deleteById(id);
+                return !feedbackRepository.existsById(id);
+        }
 }
