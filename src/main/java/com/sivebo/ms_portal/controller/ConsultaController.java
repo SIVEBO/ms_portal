@@ -59,6 +59,8 @@ public class ConsultaController {
                 
                 if(num_null == params.size()) {
                         return ResponseEntity.badRequest().body("Debe proporcionar un atributo de búsqueda valido");
+                }else if(num_null > 1){
+                        return ResponseEntity.badRequest().body("Solo se permite un atributo de búsqueda a la vez");
                 }else if(codigoTracking != null) {
                         log.info(">>> Buscando consulta por codigo de tracking: {}", codigoTracking);
                         return ResponseEntity.ok(consultaService.getByCodigoTrackingConsultado(codigoTracking));
@@ -70,7 +72,7 @@ public class ConsultaController {
                         log.info(">>> Buscando consulta por fecha: {}", fecha);
                         return ResponseEntity.ok(consultaService.getByFecha(fecha_formateada));
                 }else{
-                        return ResponseEntity.badRequest().body("Solo se permite un atributo de búsqueda a la vez");
+                        return ResponseEntity.internalServerError().body("Solo se permite un atributo de búsqueda a la vez");
                 }
         }
 
