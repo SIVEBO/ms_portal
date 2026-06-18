@@ -1,5 +1,7 @@
 package com.sivebo.ms_portal.dto.Request;
 
+import java.time.LocalDateTime;
+
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -16,7 +18,6 @@ public class FeedbackRequestDTO {
         @NotNull(message = "El id de la guía de tracking es obligatorio")
         Long idGuiaTracking;
 
-        @NotNull(message = "El id del cliente es obligatorio")
         Long idCliente;
 
         @Min(value = 1, message = "La calificación debe ser al menos 1")
@@ -26,4 +27,7 @@ public class FeedbackRequestDTO {
 
         @Nullable()
         String comentario;
+
+        @NotNull(message = "La fecha y hora del feedback es obligatoria")
+        LocalDateTime fechaHora;
 }

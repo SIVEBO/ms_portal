@@ -9,11 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FeedbackResponseDTO {
-        
-        String codigoTracking;
-        String nroDocumentoCliente;
-        Integer calificacion;
-        String comentario;
+public class ConsultaPublicaResponseDTO {
+
+        String codigoTrackingConsultado;
+        Boolean guiaEncontrada;
+        String ipUsuario;
         LocalDateTime fechaHora;
 }

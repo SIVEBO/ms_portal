@@ -11,6 +11,9 @@ public class AppConfig {
         @Value("${ms.tracking.url}")
         private String trackingBaseUrl;
 
+        @Value("${ms.clientes.url}")
+        private String clientesBaseUrl;
+
         @Bean
         public WebClient.Builder webClientBuilder() {
                 return WebClient.builder();
@@ -20,6 +23,13 @@ public class AppConfig {
         public WebClient trackingWebClient(WebClient.Builder webClientBuilder) {
                 return webClientBuilder
                         .baseUrl(trackingBaseUrl)
+                        .build();
+        }
+
+        @Bean
+        public WebClient clientesWebClient(WebClient.Builder webClientBuilder) {
+                return webClientBuilder
+                        .baseUrl(clientesBaseUrl)
                         .build();
         }
 

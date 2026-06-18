@@ -1,5 +1,7 @@
 package com.sivebo.ms_portal.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,12 +26,15 @@ public class Feedback {
         @Column(name = "id_guia_tracking", nullable = false)
         Long idGuiaTracking;
 
-        @Column(name = "id_cliente", nullable = false)
+        @Column(name = "id_cliente")
         Long idCliente;
 
         @Column(name = "calificacion", nullable = false)
         Integer calificacion;
 
-        @Column(name = "comentario", nullable = true, length=255)
+        @Column(name = "comentario", length = 255)
         String comentario;
+
+        @Column(name = "fecha_hora", nullable = false)
+        LocalDateTime fechaHora;
 }

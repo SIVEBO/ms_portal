@@ -3,7 +3,6 @@ package com.sivebo.ms_portal.dto.Request;
 import java.time.LocalDateTime;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,9 +16,6 @@ public class ConsultaRequestDTO {
         @Size(min = 12, max = 12, message = "El código de tracking debe tener exactamente 12 caracteres")
         @NotBlank(message = "El código de tracking es obligatorio")
         String codigoTrackingConsultado;
-
-        @NotNull(message = "El id de la guía es obligatorio")
-        Long idGuia;
 
         @NotBlank(message = "La IP del usuario es obligatoria")
         String ipUsuario;

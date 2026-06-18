@@ -2,15 +2,19 @@ package com.sivebo.ms_portal.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -25,55 +29,74 @@ import com.sivebo.ms_portal.utils.WebClientUtil;
 @ExtendWith(MockitoExtension.class)
 class FeedbackServiceTest {
 
-	@Mock
-	FeedbackRepository feedbackRepository;
+        @Mock FeedbackRepository feedbackRepository;
+        @Mock WebClientUtil webClientUtil;
+        @Mock WebClient trackingWebClient;
+        @Mock WebClient clientesWebClient;
 
-	@Mock
-	WebClientUtil webClientUtil;
+        @InjectMocks FeedbackService feedbackService;
 
-	@Mock
-	WebClient trackingWebClient;
+        private final LocalDateTime now = LocalDateTime.now();
 
-	@InjectMocks
-	FeedbackService feedbackService;
+        @Test
+        void getAll_mapsEntityFieldsToDto() {
+                Feedback feedback = new Feedback(1L, 50L, 1234L, 5, "Excelente", now);
+                when(feedbackRepository.findAll()).thenReturn(List.of(feedback));
+                when(webClientUtil.resolveFieldById(anyLong(), anyString(), anyString(), any()))
+                        .thenReturn(Optional.empty());
 
-	@Test
-	void getAll_mapsEntityFieldsToDto() {
-		Feedback feedback = new Feedback(1L, 50L, 1234L, 5, "Excelente");
-		when(feedbackRepository.findAll()).thenReturn(List.of(feedback));
+                List<FeedbackResponseDTO> result = feedbackService.getAll();
 
-		List<FeedbackResponseDTO> result = feedbackService.getAll();
+                assertThat(result).hasSize(1);
+                assertThat(result.get(0).getCalificacion()).isEqualTo(5);
+                assertThat(result.get(0).getComentario()).isEqualTo("Excelente");
+                assertThat(result.get(0).getFechaHora()).isEqualTo(now);
+        }
 
-		assertThat(result).hasSize(1);
-		FeedbackResponseDTO dto = result.get(0);
-		assertThat(dto.getCodigoTracking()).isEqualTo("50");
-		assertThat(dto.getNroDocumentoCliente()).isEqualTo("1234");
-		assertThat(dto.getCalificacion()).isEqualTo(5);
-		assertThat(dto.getComentario()).isEqualTo("Excelente");
-	}
+        @Test
+        void getByCalificacion_returnsList() {
+                Feedback f1 = new Feedback(1L, 10L, null, 4, null, now);
+                Feedback f2 = new Feedback(2L, 20L, null, 4, "Bien", now);
+                when(feedbackRepository.findByCalificacion(4)).thenReturn(List.of(f1, f2));
+                when(webClientUtil.resolveFieldById(anyLong(), anyString(), anyString(), any()))
+                        .thenReturn(Optional.empty());
 
-	@Test
-	void getById_returnsMappedDto() {
-		when(feedbackRepository.findById(1L))
-				.thenReturn(Optional.of(new Feedback(1L, 50L, 1234L, 3, "Regular")));
+                List<FeedbackResponseDTO> result = feedbackService.getByCalificacion(4);
 
-		Optional<FeedbackResponseDTO> result = feedbackService.getById(1L);
+                assertThat(result).hasSize(2);
+        }
 
-		assertThat(result).isPresent();
-		assertThat(result.get().getNroDocumentoCliente()).isEqualTo("1234");
-	}
+        @Test
+        void create_withKnownGuia_savesFeedback() {
+                FeedbackRequestDTO dto = new FeedbackRequestDTO(50L, 1234L, 4, "Bien", now);
+                Feedback saved = new Feedback(1L, 50L, 1234L, 4, "Bien", now);
 
-	@Test
-	void create_validatesTrackingThenPersists() {
-		FeedbackRequestDTO request = new FeedbackRequestDTO(50L, 1234L, 4, "Bien");
-		when(feedbackRepository.save(any(Feedback.class)))
-				.thenReturn(new Feedback(1L, 50L, 1234L, 4, "Bien"));
+                doNothing().when(webClientUtil).validateMicroServiceById(50L, "guias", trackingWebClient);
+                when(feedbackRepository.save(any())).thenReturn(saved);
+                when(webClientUtil.resolveFieldById(anyLong(), anyString(), anyString(), any()))
+                        .thenReturn(Optional.empty());
 
-		FeedbackResponseDTO result = feedbackService.create(request);
+                FeedbackResponseDTO result = feedbackService.create(dto);
 
-		verify(webClientUtil).validateMicroServiceByQuery(
-				eq("portal"), eq("codigo_tracking"), eq("50"), eq(trackingWebClient));
-		assertThat(result.getCodigoTracking()).isEqualTo("50");
-		assertThat(result.getNroDocumentoCliente()).isEqualTo("1234");
-	}
+                verify(webClientUtil).validateMicroServiceById(50L, "guias", trackingWebClient);
+                verify(feedbackRepository).save(any());
+                assertThat(result.getCalificacion()).isEqualTo(4);
+        }
+
+        @Test
+        void create_withAnonymousClient_savesNullIdCliente() {
+                FeedbackRequestDTO dto = new FeedbackRequestDTO(50L, null, 3, null, now);
+                Feedback saved = new Feedback(2L, 50L, null, 3, null, now);
+
+                doNothing().when(webClientUtil).validateMicroServiceById(50L, "guias", trackingWebClient);
+                when(feedbackRepository.save(any())).thenReturn(saved);
+                when(webClientUtil.resolveFieldById(anyLong(), anyString(), anyString(), any()))
+                        .thenReturn(Optional.empty());
+
+                feedbackService.create(dto);
+
+                ArgumentCaptor<Feedback> captor = ArgumentCaptor.forClass(Feedback.class);
+                verify(feedbackRepository).save(captor.capture());
+                assertThat(captor.getValue().getIdCliente()).isNull();
+        }
 }
