@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FeedbackResponseDTO {
         
-        Long id; 
-        Long idGuiaTracking; 
+        String codigoTracking; 
+        String nroDocumentoCliente;
         Integer calificacion; 
         String comentario;      
 }

@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ConsultaResponseDTO {
 
-        Long id; 
         String codigoTrackingConsultado;
+        String codigoTrackingGuia;
         String ipUsuario;
         LocalDateTime fechaHora;
 }

@@ -16,6 +16,9 @@ public class FeedbackRequestDTO {
         @NotNull(message = "El id de la guía de tracking es obligatorio")
         Long idGuiaTracking;
 
+        @NotNull(message = "El id de la guía de tracking es obligatorio")
+        Long idCliente;
+
         @Min(value = 1, message = "La calificación debe ser al menos 1")
         @Max(value = 5, message = "La calificación debe ser como máximo 5")
         @NotNull(message = "La calificación es obligatoria")

@@ -30,7 +30,6 @@ public class FeedbackService {
 
         private FeedbackResponseDTO mapToDTO(Feedback feedback) {
                 return new FeedbackResponseDTO(
-                        feedback.getId(),
                         feedback.getIdGuiaTracking(),
                         feedback.getCalificacion(),
                         feedback.getComentario()

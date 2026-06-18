@@ -26,6 +26,9 @@ public class Consulta {
         @Column(name = "codigo_tracking_consultado", nullable = false, length=12)
         String codigoTrackingConsultado;
 
+        @Column(name = "id_guia", nullable = false)
+        Long idGuia;
+
         @Column(name = "ip_usuario", nullable = false, length=15)
         String ipUsuario;
 
