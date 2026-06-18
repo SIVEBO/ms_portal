@@ -20,10 +20,24 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.badRequest().body(errores);
 	}
 
+	@ExceptionHandler(MicroserviceValidationException.class)
+	public ResponseEntity<Map<String, String>> handleMicroserviceValidation(MicroserviceValidationException ex) {
+		Map<String, String> error = new HashMap<>();
+		error.put("error", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_CONTENT).body(error);
+	}
+
+	@ExceptionHandler(MicroserviceUnavailableException.class)
+	public ResponseEntity<Map<String, String>> handleMicroserviceUnavailable(MicroserviceUnavailableException ex) {
+		Map<String, String> error = new HashMap<>();
+		error.put("error", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(error);
+	}
+
 	@ExceptionHandler(RuntimeException.class)
 	public ResponseEntity<Map<String, String>> handleRuntime(RuntimeException ex) {
 		Map<String, String> error = new HashMap<>();
 		error.put("error", ex.getMessage());
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
 	}
 }

@@ -34,8 +34,8 @@ public class ConsultaService {
 
         private ConsultaResponseDTO mapToDTO(Consulta consulta) {
                 return new ConsultaResponseDTO(
-                        consulta.getId(),
                         consulta.getCodigoTrackingConsultado(),
+                        String.valueOf(consulta.getIdGuia()),
                         consulta.getIpUsuario(),
                         consulta.getFechaHora()
                 );
@@ -83,6 +83,7 @@ public class ConsultaService {
                         new Consulta(
                         null,
                         dto.getCodigoTrackingConsultado(),
+                        dto.getIdGuia(),
                         dto.getIpUsuario(),
                         dto.getFechaHora()
                         )

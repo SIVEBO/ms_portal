@@ -1,7 +1,8 @@
 package com.sivebo.ms_portal.controller;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("api/v1/feebacks")
+@RequestMapping("api/v1/feedbacks")
 @RequiredArgsConstructor
 public class FeedbackController {
         
@@ -47,16 +48,13 @@ public class FeedbackController {
                 @RequestParam(required = false) String idGuiaTracking,
                 @RequestParam(required = false) String calificacion){
 
-                List<String> params = new ArrayList<>(List.of(idGuiaTracking, calificacion));
+                long provided = Stream.of(idGuiaTracking, calificacion)
+                        .filter(Objects::nonNull)
+                        .count();
 
-                int num_null = 0;
-                for(String value: params){
-                        if(value == null) num_null++;
-                }
-                
-                if(num_null == params.size()) {
+                if(provided == 0) {
                         return ResponseEntity.badRequest().body("Debe proporcionar un atributo de búsqueda valido");
-                }else if(num_null > 1){
+                }else if(provided > 1){
                         return ResponseEntity.badRequest().body("Solo se permite un atributo de búsqueda a la vez");
                 }else if(idGuiaTracking != null) {
                         log.info(">>> Buscando feedback por id de guia de tracking: {}", idGuiaTracking);
@@ -65,7 +63,7 @@ public class FeedbackController {
                         log.info(">>> Buscando feedback por calificacion: {}", calificacion);
                         return ResponseEntity.ok(feedbackService.getByCalificacion(Integer.valueOf(calificacion)));
                 }else{
-                        return ResponseEntity.internalServerError().body("Solo se permite un atributo de búsqueda a la vez");
+                        return ResponseEntity.internalServerError().body("Error en el URL query");
                 }
         }
 
@@ -78,7 +76,7 @@ public class FeedbackController {
         @DeleteMapping("/{id}")
         public ResponseEntity<String> delete(@PathVariable Long id) {
                 if (feedbackService.delete(id)) {
-                        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Feedback eliminada");
+                        return ResponseEntity.status(HttpStatus.OK).body("Feedback eliminada");
                 } else {
                         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Feedback no encontrada o no se pudo eliminar");
                 }

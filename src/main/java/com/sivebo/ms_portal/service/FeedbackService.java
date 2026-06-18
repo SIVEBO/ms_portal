@@ -30,7 +30,8 @@ public class FeedbackService {
 
         private FeedbackResponseDTO mapToDTO(Feedback feedback) {
                 return new FeedbackResponseDTO(
-                        feedback.getIdGuiaTracking(),
+                        String.valueOf(feedback.getIdGuiaTracking()),
+                        String.valueOf(feedback.getIdCliente()),
                         feedback.getCalificacion(),
                         feedback.getComentario()
                 );
@@ -66,6 +67,7 @@ public class FeedbackService {
                         new Feedback(
                                 null,
                                 dto.getIdGuiaTracking(),
+                                dto.getIdCliente(),
                                 dto.getCalificacion(),
                                 dto.getComentario()
                         )

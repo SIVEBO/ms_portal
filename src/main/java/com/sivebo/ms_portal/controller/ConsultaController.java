@@ -2,8 +2,9 @@ package com.sivebo.ms_portal.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,16 +51,13 @@ public class ConsultaController {
                 @RequestParam(required = false) String ipUsuario,
                 @RequestParam(required = false) String fecha){
 
-                List<String> params = new ArrayList<>(List.of(codigoTracking, ipUsuario, fecha));
+                long provided = Stream.of(codigoTracking, ipUsuario, fecha)
+                        .filter(Objects::nonNull)
+                        .count();
 
-                int num_null = 0;
-                for(String value: params){
-                        if(value == null) num_null++;
-                }
-                
-                if(num_null == params.size()) {
+                if(provided == 0) {
                         return ResponseEntity.badRequest().body("Debe proporcionar un atributo de búsqueda valido");
-                }else if(num_null > 1){
+                }else if(provided > 1){
                         return ResponseEntity.badRequest().body("Solo se permite un atributo de búsqueda a la vez");
                 }else if(codigoTracking != null) {
                         log.info(">>> Buscando consulta por codigo de tracking: {}", codigoTracking);
@@ -68,7 +66,7 @@ public class ConsultaController {
                         log.info(">>> Buscando consulta por ip de usuario: {}", ipUsuario);
                         return ResponseEntity.ok(consultaService.getByIpUsuario(ipUsuario));
                 }else if(fecha != null){
-                        LocalDate fecha_formateada = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("dd-MM-YY"));
+                        LocalDate fecha_formateada = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
                         log.info(">>> Buscando consulta por fecha: {}", fecha);
                         return ResponseEntity.ok(consultaService.getByFecha(fecha_formateada));
                 }else{
@@ -85,7 +83,7 @@ public class ConsultaController {
         @DeleteMapping("/{id}")
         public ResponseEntity<String> delete(@PathVariable Long id) {
                 if (consultaService.delete(id)) {
-                        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Consulta eliminada");
+                        return ResponseEntity.status(HttpStatus.OK).body("Consulta eliminada");
                 } else {
                         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Consulta no encontrada o no se pudo eliminar");
                 }

@@ -29,9 +29,9 @@ public class Consulta {
         @Column(name = "id_guia", nullable = false)
         Long idGuia;
 
-        @Column(name = "ip_usuario", nullable = false, length=15)
+        @Column(name = "ip_usuario", nullable = false, length=45)
         String ipUsuario;
 
-        @Column(name = "fecha_hora", nullable = false, unique=true)
+        @Column(name = "fecha_hora", nullable = false)
         LocalDateTime fechaHora;
 }
