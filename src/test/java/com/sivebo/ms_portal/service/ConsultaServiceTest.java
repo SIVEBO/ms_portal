@@ -42,6 +42,8 @@ class ConsultaServiceTest {
                 when(consultaRepository.findAll()).thenReturn(List.of(consulta));
                 when(webClientUtil.resolveFieldById(anyLong(), anyString(), anyString(), any()))
                         .thenReturn(Optional.empty());
+                when(webClientUtil.resolveEstadoActualByGuiaId(anyLong(), any()))
+                        .thenReturn(Optional.empty());
 
                 List<ConsultaResponseDTO> result = consultaService.getAll();
 
@@ -72,6 +74,8 @@ class ConsultaServiceTest {
                         .thenReturn(Optional.of(5L));
                 when(consultaRepository.save(any())).thenReturn(saved);
                 when(webClientUtil.resolveFieldById(anyLong(), anyString(), anyString(), any()))
+                        .thenReturn(Optional.empty());
+                when(webClientUtil.resolveEstadoActualByGuiaId(anyLong(), any()))
                         .thenReturn(Optional.empty());
 
                 consultaService.create(dto);

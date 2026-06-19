@@ -13,6 +13,7 @@ public class ConsultaResponseDTO {
 
         String codigoTrackingConsultado;
         String codigoTrackingGuia;
+        String estadoActual;
         String ipUsuario;
         LocalDateTime fechaHora;
 }

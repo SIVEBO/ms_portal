@@ -38,9 +38,13 @@ public class ConsultaService {
                 String codigoTrackingGuia = consulta.getIdGuia() == null ? null : webClientUtil
                         .resolveFieldById(consulta.getIdGuia(), "guias", "codigoTracking", trackingWebClient)
                         .orElse(null);
+                String estadoActual = webClientUtil
+                        .resolveEstadoActualByGuiaId(consulta.getIdGuia(), trackingWebClient)
+                        .orElse(null);
                 return new ConsultaResponseDTO(
                         consulta.getCodigoTrackingConsultado(),
                         codigoTrackingGuia,
+                        estadoActual,
                         consulta.getIpUsuario(),
                         consulta.getFechaHora()
                 );

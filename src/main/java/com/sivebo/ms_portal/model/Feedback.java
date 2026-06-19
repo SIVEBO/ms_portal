@@ -16,14 +16,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "feedback")
+@Table(name = "FEEDBACK_CLIENTE")
 public class Feedback {
         
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         Long id;
 
-        @Column(name = "id_guia_tracking", nullable = false)
+        @Column(name = "id_guia", nullable = false)
         Long idGuiaTracking;
 
         @Column(name = "id_cliente")

@@ -71,6 +71,25 @@ public class WebClientUtil {
 		}
 	}
 
+	public Optional<String> resolveEstadoActualByGuiaId(Long idGuia, WebClient webClient) {
+		if (idGuia == null) return Optional.empty();
+		try {
+			Map<String, Object> response = webClient.get()
+					.uri("/api/v1/historial/estado-actual/{id}", idGuia)
+					.retrieve()
+					.bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
+					.block();
+			return Optional.ofNullable(response)
+					.map(r -> r.get("nombreEstado"))
+					.map(Object::toString);
+		} catch (WebClientResponseException.NotFound e) {
+			return Optional.empty();
+		} catch (Exception e) {
+			log.warn("No se pudo resolver estado actual para guia {}: {}", idGuia, e.getMessage());
+			return Optional.empty();
+		}
+	}
+
 	public void validateMicroServiceByQuery(String name_service, String query, String value, WebClient webClient) {
                 try {
 			webClient.get()
