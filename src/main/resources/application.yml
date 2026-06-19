@@ -17,7 +17,7 @@ spring:
           sql: true
 
 server:
-  port: 8081
+  port: 8010
 
 eureka:
   client:
@@ -37,6 +37,6 @@ logging:
 
 ms:
   tracking:
-    url: ${MS_TRACKING_URL:http://localhost:8093}
+    url: ${MS_TRACKING_URL:http://localhost:8004}
   clientes:
-    url: ${MS_CLIENTES_URL:http://localhost:8091}
+    url: ${MS_CLIENTES_URL:http://localhost:8009}
