@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: ms_portal
+  datasource:
+    url: ${DB_URL:jdbc:mariadb://localhost:3306/db_ms_portal?createDatabaseIfNotExist=true}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDBDialect
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:update}
+    show-sql: ${JPA_SHOW_SQL:false}
+    properties:
+      hibernate:
+        format:
+          sql: true
+
+server:
+  port: 8081
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /doc/swagger-ui.html
+
+logging:
+  level:
+    org.hibernate.orm.jdbc.bind: ${HIBERNATE_BIND_LOG:OFF}
+
+ms:
+  tracking:
+    url: ${MS_TRACKING_URL:http://localhost:8093}
+  clientes:
+    url: ${MS_CLIENTES_URL:http://localhost:8091}
