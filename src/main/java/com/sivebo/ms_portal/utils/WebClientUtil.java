@@ -57,7 +57,7 @@ public class WebClientUtil {
 	public Optional<Long> resolveGuiaIdByCodigoTracking(String codigoTracking, WebClient webClient) {
 		try {
 			Map<String, Object> response = webClient.get()
-					.uri("/api/v1/guias/buscar?codigo_tracking={ct}", codigoTracking)
+					.uri("/api/v1/guias/buscar?codigoTracking={ct}", codigoTracking)
 					.retrieve()
 					.bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
 					.block();

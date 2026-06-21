@@ -1,20 +1,15 @@
 package com.sivebo.ms_portal.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class AppConfig {
-        
-        @Value("${ms.tracking.url}")
-        private String trackingBaseUrl;
-
-        @Value("${ms.clientes.url}")
-        private String clientesBaseUrl;
 
         @Bean
+        @LoadBalanced
         public WebClient.Builder webClientBuilder() {
                 return WebClient.builder();
         }
@@ -22,14 +17,14 @@ public class AppConfig {
         @Bean
         public WebClient trackingWebClient(WebClient.Builder webClientBuilder) {
                 return webClientBuilder
-                        .baseUrl(trackingBaseUrl)
+                        .baseUrl("http://ms-tracking")
                         .build();
         }
 
         @Bean
         public WebClient clientesWebClient(WebClient.Builder webClientBuilder) {
                 return webClientBuilder
-                        .baseUrl(clientesBaseUrl)
+                        .baseUrl("http://ms-clientes")
                         .build();
         }
 

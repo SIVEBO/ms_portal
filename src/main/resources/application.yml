@@ -17,7 +17,7 @@ spring:
           sql: true
 
 server:
-  port: 8090
+  port: ${SERVER_PORT:8090}
 
 eureka:
   client:
@@ -29,14 +29,8 @@ springdoc:
     enabled: true
   swagger-ui:
     enabled: true
-    path: /doc/swagger-ui.html
+    path: /swagger-ui.html
 
 logging:
   level:
     org.hibernate.orm.jdbc.bind: ${HIBERNATE_BIND_LOG:OFF}
-
-ms:
-  tracking:
-    url: ${MS_TRACKING_URL:http://localhost:8084}
-  clientes:
-    url: ${MS_CLIENTES_URL:http://localhost:8089}
