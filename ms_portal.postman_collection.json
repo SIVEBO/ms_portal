@@ -81,9 +81,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/consultas/search?codigoTracking={{codigoTracking}}",
+              "raw": "{{baseUrl}}/api/v1/consultas/buscar?codigoTracking={{codigoTracking}}",
               "host": ["{{baseUrl}}"],
-              "path": ["api","v1","consultas","search"],
+              "path": ["api","v1","consultas","buscar"],
               "query": [ { "key": "codigoTracking", "value": "{{codigoTracking}}" } ]
             }
           },
@@ -162,9 +162,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/feedbacks/search?calificacion=5",
+              "raw": "{{baseUrl}}/api/v1/feedbacks/buscar?calificacion=5",
               "host": ["{{baseUrl}}"],
-              "path": ["api","v1","feedbacks","search"],
+              "path": ["api","v1","feedbacks","buscar"],
               "query": [ { "key": "calificacion", "value": "5" } ]
             }
           },
