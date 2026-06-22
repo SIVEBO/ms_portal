@@ -173,9 +173,9 @@ public class FeedbackController {
         @DeleteMapping("/{id}")
         public ResponseEntity<String> delete(@PathVariable Long id) {
                 if (feedbackService.delete(id)) {
-                        return ResponseEntity.status(HttpStatus.OK).body("Feedback eliminada");
+                        return ResponseEntity.status(HttpStatus.OK).body("Feedback eliminado");
                 } else {
-                        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Feedback no encontrada o no se pudo eliminar");
+                        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Feedback no encontrado o no se pudo eliminar");
                 }
         }
 }
