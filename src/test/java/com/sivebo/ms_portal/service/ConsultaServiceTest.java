@@ -37,7 +37,7 @@ class ConsultaServiceTest {
         private final LocalDateTime now = LocalDateTime.now();
 
         @Test
-        void getAll_mapsEntityFieldsToDto() {
+        void getAllMapsEntityFieldsToDto() {
                 Consulta consulta = new Consulta(1L, "ABC123456789", 3L, "192.168.0.1", now);
                 when(consultaRepository.findAll()).thenReturn(List.of(consulta));
                 when(webClientUtil.resolveFieldById(anyLong(), anyString(), anyString(), any()))
@@ -54,7 +54,7 @@ class ConsultaServiceTest {
         }
 
         @Test
-        void getById_present_returnsMappedDto() {
+        void getByIdPresentReturnsMappedDto() {
                 Consulta consulta = new Consulta(1L, "ABC123456789", null, "10.0.0.1", now);
                 when(consultaRepository.findById(1L)).thenReturn(Optional.of(consulta));
 
@@ -66,7 +66,7 @@ class ConsultaServiceTest {
         }
 
         @Test
-        void create_existingTracking_savesWithGuiaId() {
+        void createExistingTrackingSavesWithGuiaId() {
                 ConsultaRequestDTO dto = new ConsultaRequestDTO("ABC123456789", "192.168.1.1", now);
                 Consulta saved = new Consulta(1L, "ABC123456789", 5L, "192.168.1.1", now);
 
@@ -86,7 +86,7 @@ class ConsultaServiceTest {
         }
 
         @Test
-        void create_unknownTracking_savesWithNullGuiaId() {
+        void createUnknownTrackingSavesWithNullGuiaId() {
                 ConsultaRequestDTO dto = new ConsultaRequestDTO("NOTFOUND12345", "10.0.0.1", now);
                 Consulta saved = new Consulta(2L, "NOTFOUND12345", null, "10.0.0.1", now);
 
@@ -102,7 +102,7 @@ class ConsultaServiceTest {
         }
 
         @Test
-        void delete_existingId_returnsTrue() {
+        void deleteExistingIdReturnsTrue() {
                 when(consultaRepository.existsById(1L)).thenReturn(false);
 
                 Boolean result = consultaService.delete(1L);

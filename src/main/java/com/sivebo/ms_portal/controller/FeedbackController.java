@@ -85,7 +85,7 @@ public class FeedbackController {
 
         @Operation(
                 summary = "Buscar feedbacks por atributo",
-                description = "Obtiene feedbacks por 'search?idGuiaTracking=*' o 'search?calificacion=*'"
+                description = "Obtiene feedbacks por 'buscar?idGuiaTracking=*' o 'buscar?calificacion=*'"
         )
         @ApiResponses(value = {
                         @ApiResponse(
@@ -102,7 +102,7 @@ public class FeedbackController {
                                 content = @Content(mediaType = "application/json")
                         )
         })
-        @GetMapping("/search")
+        @GetMapping("/buscar")
         public ResponseEntity<?> getByAtribute(
                         @RequestParam(required = false) String idGuiaTracking,
                         @RequestParam(required = false) String calificacion) {

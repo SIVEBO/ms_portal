@@ -107,7 +107,7 @@ public class ConsultaController {
 
         @Operation(
                 summary = "Buscar consultas por atributo",
-                description = "Obtiene consultas por 'search?codigoTracking=*', 'search?ipUsuario=*' o 'search?fecha=dd-MM-yyyy'"
+                description = "Obtiene consultas por 'buscar?codigoTracking=*', 'buscar?ipUsuario=*' o 'buscar?fecha=dd-MM-yyyy'"
         )
         @ApiResponses(value = {
                         @ApiResponse(
@@ -129,7 +129,7 @@ public class ConsultaController {
                                 content = @Content(mediaType = "application/json")
                         )
         })
-        @GetMapping("/search")
+        @GetMapping("/buscar")
         public ResponseEntity<?> getByAtribute(
                         @RequestParam(required = false) String codigoTracking,
                         @RequestParam(required = false) String ipUsuario,

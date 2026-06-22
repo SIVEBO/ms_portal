@@ -1,0 +1,189 @@
+{
+  "info": {
+    "name": "ms_portal",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "SIVEBO ms_portal — todos los endpoints, ruteados por el API gateway ({{baseUrl}})."
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "idConsulta", "value": "1" },
+    { "key": "idFeedback", "value": "1" },
+    { "key": "idGuia", "value": "1" },
+    { "key": "codigoTracking", "value": "TRACK0000001" }
+  ],
+  "item": [
+    {
+      "name": "ConsultaController",
+      "item": [
+        {
+          "name": "Crear consulta",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codigoTrackingConsultado\": \"{{codigoTracking}}\",\n  \"ipUsuario\": \"190.0.0.1\",\n  \"fechaHora\": \"2026-06-21T11:00:00\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/api/v1/consultas", "host": ["{{baseUrl}}"], "path": ["api","v1","consultas"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var j;",
+                  "try { j = pm.response.json(); } catch (e) { j = null; }",
+                  "if (j && j.id !== undefined && j.id !== null) pm.collectionVariables.set(\"idConsulta\", j.id);",
+                  "pm.test(\"status ok\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Listar consultas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/consultas", "host": ["{{baseUrl}}"], "path": ["api","v1","consultas"] }
+          },
+          "event": [
+            { "listen": "test", "script": { "type": "text/javascript", "exec": [ "pm.test(\"status ok\", function () { pm.expect(pm.response.code).to.be.oneOf([200]); });" ] } }
+          ]
+        },
+        {
+          "name": "Obtener consulta por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/consultas/{{idConsulta}}", "host": ["{{baseUrl}}"], "path": ["api","v1","consultas","{{idConsulta}}"] }
+          },
+          "event": [
+            { "listen": "test", "script": { "type": "text/javascript", "exec": [ "pm.test(\"status ok\", function () { pm.expect(pm.response.code).to.be.oneOf([200]); });" ] } }
+          ]
+        },
+        {
+          "name": "Consultas publicas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/consultas/publica", "host": ["{{baseUrl}}"], "path": ["api","v1","consultas","publica"] }
+          },
+          "event": [
+            { "listen": "test", "script": { "type": "text/javascript", "exec": [ "pm.test(\"status ok\", function () { pm.expect(pm.response.code).to.be.oneOf([200]); });" ] } }
+          ]
+        },
+        {
+          "name": "Buscar consultas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/consultas/search?codigoTracking={{codigoTracking}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api","v1","consultas","search"],
+              "query": [ { "key": "codigoTracking", "value": "{{codigoTracking}}" } ]
+            }
+          },
+          "event": [
+            { "listen": "test", "script": { "type": "text/javascript", "exec": [ "pm.test(\"status ok\", function () { pm.expect(pm.response.code).to.be.oneOf([200]); });" ] } }
+          ]
+        },
+        {
+          "name": "Borrar consulta",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/consultas/{{idConsulta}}", "host": ["{{baseUrl}}"], "path": ["api","v1","consultas","{{idConsulta}}"] }
+          },
+          "event": [
+            { "listen": "test", "script": { "type": "text/javascript", "exec": [ "pm.test(\"status ok\", function () { pm.expect(pm.response.code).to.be.oneOf([200,204]); });" ] } }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FeedbackController",
+      "item": [
+        {
+          "name": "Crear feedback",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idGuiaTracking\": 1,\n  \"idCliente\": 1,\n  \"calificacion\": 5,\n  \"comentario\": \"Excelente servicio\",\n  \"fechaHora\": \"2026-06-21T11:30:00\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/api/v1/feedbacks", "host": ["{{baseUrl}}"], "path": ["api","v1","feedbacks"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var j;",
+                  "try { j = pm.response.json(); } catch (e) { j = null; }",
+                  "if (j && j.id !== undefined && j.id !== null) pm.collectionVariables.set(\"idFeedback\", j.id);",
+                  "pm.test(\"status ok\", function () { pm.expect(pm.response.code).to.be.oneOf([200,201]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Listar feedbacks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/feedbacks", "host": ["{{baseUrl}}"], "path": ["api","v1","feedbacks"] }
+          },
+          "event": [
+            { "listen": "test", "script": { "type": "text/javascript", "exec": [ "pm.test(\"status ok\", function () { pm.expect(pm.response.code).to.be.oneOf([200]); });" ] } }
+          ]
+        },
+        {
+          "name": "Obtener feedback por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/feedbacks/{{idFeedback}}", "host": ["{{baseUrl}}"], "path": ["api","v1","feedbacks","{{idFeedback}}"] }
+          },
+          "event": [
+            { "listen": "test", "script": { "type": "text/javascript", "exec": [ "pm.test(\"status ok\", function () { pm.expect(pm.response.code).to.be.oneOf([200]); });" ] } }
+          ]
+        },
+        {
+          "name": "Buscar feedbacks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/feedbacks/search?calificacion=5",
+              "host": ["{{baseUrl}}"],
+              "path": ["api","v1","feedbacks","search"],
+              "query": [ { "key": "calificacion", "value": "5" } ]
+            }
+          },
+          "event": [
+            { "listen": "test", "script": { "type": "text/javascript", "exec": [ "pm.test(\"status ok\", function () { pm.expect(pm.response.code).to.be.oneOf([200]); });" ] } }
+          ]
+        },
+        {
+          "name": "Borrar feedback",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/feedbacks/{{idFeedback}}", "host": ["{{baseUrl}}"], "path": ["api","v1","feedbacks","{{idFeedback}}"] }
+          },
+          "event": [
+            { "listen": "test", "script": { "type": "text/javascript", "exec": [ "pm.test(\"status ok\", function () { pm.expect(pm.response.code).to.be.oneOf([200,204]); });" ] } }
+          ]
+        }
+      ]
+    }
+  ]
+}

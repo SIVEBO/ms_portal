@@ -40,7 +40,7 @@ class FeedbackServiceTest {
         private final LocalDateTime now = LocalDateTime.now();
 
         @Test
-        void getAll_mapsEntityFieldsToDto() {
+        void getAllMapsEntityFieldsToDto() {
                 Feedback feedback = new Feedback(1L, 50L, 1234L, 5, "Excelente", now);
                 when(feedbackRepository.findAll()).thenReturn(List.of(feedback));
                 when(webClientUtil.resolveFieldById(anyLong(), anyString(), anyString(), any()))
@@ -55,7 +55,7 @@ class FeedbackServiceTest {
         }
 
         @Test
-        void getByCalificacion_returnsList() {
+        void getByCalificacionReturnsList() {
                 Feedback f1 = new Feedback(1L, 10L, null, 4, null, now);
                 Feedback f2 = new Feedback(2L, 20L, null, 4, "Bien", now);
                 when(feedbackRepository.findByCalificacion(4)).thenReturn(List.of(f1, f2));
@@ -68,7 +68,7 @@ class FeedbackServiceTest {
         }
 
         @Test
-        void create_withKnownGuia_savesFeedback() {
+        void createWithKnownGuiaSavesFeedback() {
                 FeedbackRequestDTO dto = new FeedbackRequestDTO(50L, 1234L, 4, "Bien", now);
                 Feedback saved = new Feedback(1L, 50L, 1234L, 4, "Bien", now);
 
@@ -85,7 +85,7 @@ class FeedbackServiceTest {
         }
 
         @Test
-        void create_withAnonymousClient_savesNullIdCliente() {
+        void createWithAnonymousClientSavesNullIdCliente() {
                 FeedbackRequestDTO dto = new FeedbackRequestDTO(50L, null, 3, null, now);
                 Feedback saved = new Feedback(2L, 50L, null, 3, null, now);
 
